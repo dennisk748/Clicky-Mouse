@@ -15,6 +15,7 @@ public class Target : MonoBehaviour
     [SerializeField] private int pointValue;
     [SerializeField] private ParticleSystem explosion;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +28,7 @@ public class Target : MonoBehaviour
 
     private void Update()
     {
-        if(transform.position.y < -7)
+        if(transform.position.y < -11)
         {
             Destroy(gameObject);
         }
@@ -50,8 +51,15 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
+
         if (gameManager.isGameActive)
         {
+            if (gameObject.CompareTag("Bomb"))
+            {
+                int value  = gameManager.life - 1;
+                gameManager.UpdateLives(value);
+                Debug.Log("You clicked a bomb");
+            }
             Destroy(gameObject);
             Instantiate(explosion, transform.position, explosion.transform.rotation);
             gameManager.UpdateScore(pointValue);
@@ -62,10 +70,7 @@ public class Target : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Destroy (gameObject);
-        if (!gameObject.CompareTag("Bomb"))
-        {
-            gameManager.GameOver();
-        }
+        
     }
 
 }

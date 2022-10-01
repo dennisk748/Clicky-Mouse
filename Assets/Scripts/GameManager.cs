@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +11,11 @@ public class GameManager : MonoBehaviour
     private float spawnRate = 1f;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI gameOver;
+    [SerializeField] private GameObject[] lifes;
+    [SerializeField] private ParticleSystem lossLifeEffect;
     [SerializeField] private int score;
+
+    public int life = 5;
 
     public GameObject titleScreen;
 
@@ -57,5 +62,15 @@ public class GameManager : MonoBehaviour
 
         UpdateScore(0);
         titleScreen.gameObject.SetActive(false);
+    }
+
+    public void UpdateLives(int value)
+    {
+        life -= 1;
+        Destroy(lifes[value]);
+        if (life == 0)
+        {
+            GameOver();
+        }
     }
 }
